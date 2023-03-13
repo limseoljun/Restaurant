@@ -12,10 +12,10 @@ import javax.transaction.Transactional;
 @Transactional
 @RequiredArgsConstructor
 public class UserJoinServiceImpl implements UserJoinService{
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Override
-    public void validateJoin(UserDto dto){
+    public void validate(UserDto dto){
         User user = new User(dto.getName(),dto.getPassword(), dto.getNickName(),dto.getPhoneNum(), dto.getHomeAddress());
         userRepository.save(user);
     }

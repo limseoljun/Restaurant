@@ -1,4 +1,4 @@
-package com.example.restaurant.domain.user.service.validateuser;
+package com.example.restaurant.domain.user.service.duplicateduser;
 
 import com.example.restaurant.controller.dto.user.UserDto;
 import com.example.restaurant.domain.user.domain.UserRepository;
@@ -11,11 +11,11 @@ import javax.transaction.Transactional;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class ValidateUserServiceImpl implements ValidateUserService{
+public class DuplicatedUserServiceImpl implements DuplicatedUserService {
     private final UserRepository userRepository;
 
     @Override
-    public void validteUser(UserDto dto) {
+    public void validte(UserDto dto) {
         if (userRepository.existsByName(dto.getName())){
             throw new UserNameDuplicateException();
         }

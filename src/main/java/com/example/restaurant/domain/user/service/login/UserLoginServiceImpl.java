@@ -15,7 +15,7 @@ public class UserLoginServiceImpl implements UserLoginService{
     private final UserRepository userRepository;
 
     @Override
-    public void validateLogin(UserDto dto) {
+    public void validate(UserDto dto) {
         if(!userRepository.existsByName(dto.getName())) {
             throw new BadCredentialsException("Validate User Name");
         }else if(!userRepository.existsByPassword(dto.getPassword())){
