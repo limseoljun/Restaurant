@@ -1,4 +1,4 @@
-package com.example.restaurant.domain.restaurant.domain;
+package com.example.restaurant.domain.food.domain;
 
 import lombok.Getter;
 
@@ -9,9 +9,18 @@ import javax.persistence.Id;
 
 @Entity
 @Getter
-public class Restaurant {
+public class Food {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    private Long price;
+    private String info;
+    public Food(){
+    }
+    public Food(String name,Long price,String info){
+        this.name=name;
+        this.price=price;
+        this.info=info;
+    }
 }
