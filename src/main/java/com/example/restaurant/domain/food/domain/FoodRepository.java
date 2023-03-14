@@ -9,5 +9,7 @@ import javax.persistence.LockModeType;
 import java.util.List;
 
 public interface FoodRepository extends JpaRepository<Food,Long> {
-    List<Food> findByOperId(Long operId);
+    List<Food> findByOwnerId(Long ownerId);
+
+    Food validateFood(Long foodId);
 }
