@@ -1,8 +1,8 @@
 package com.example.restaurant.domain.food.service.fooddelete;
 
-import com.example.restaurant.controller.dto.oper.OperDto;
+import com.example.restaurant.controller.dto.owner.OwnerDto;
 import com.example.restaurant.domain.food.domain.FoodRepository;
-import com.example.restaurant.domain.restaurantoperator.service.validateoper.ValidateOperService;
+import com.example.restaurant.domain.owner.service.validateowner.ValidateOwnerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,11 +13,11 @@ import javax.transaction.Transactional;
 @RequiredArgsConstructor
 public class FoodDeleteServiceImpl implements FoodDeleteService {
     private final FoodRepository foodRepository;
-    private final ValidateOperService validateOperService;
+    private final ValidateOwnerService validateOwnerService;
     @Override
-    public boolean Delete(Long foodId, OperDto dto){
+    public boolean Delete(Long foodId, OwnerDto dto){
         if(foodRepository.existsById(foodId)) {
-            validateOperService.validte(dto);
+            validateOwnerService.validte(dto);
             foodRepository.deleteById(foodId);
             return true;
         }
