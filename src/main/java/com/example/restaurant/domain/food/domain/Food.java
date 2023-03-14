@@ -1,6 +1,5 @@
 package com.example.restaurant.domain.food.domain;
 
-import com.example.restaurant.domain.restaurantoperator.domain.RestaurantOperator;
 import lombok.Getter;
 
 import javax.persistence.Entity;
@@ -18,15 +17,15 @@ public class Food {
     private int price;
     private String info;
     private String category;
-    private Long operId;
+    private Long ownerId;
     public Food(){
     }
-    public Food(String name, int price, String info, String category,Long operId){
+    public Food(String name, int price, String info, String category,Long ownerId){
         this.name=name;
         this.price=price;
         this.info=info;
         this.category=category;
-        this.operId=operId;
+        this.ownerId=ownerId;
     }
     public void update(String name,int price,String info,String category){
         this.name=name;
