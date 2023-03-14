@@ -3,8 +3,8 @@ package com.example.restaurant.domain.food.service.foodchange;
 import com.example.restaurant.controller.dto.food.FoodDto;
 import com.example.restaurant.domain.food.domain.Food;
 import com.example.restaurant.domain.food.domain.FoodRepository;
-import com.example.restaurant.domain.restaurantoperator.domain.RestaurantOperator;
-import com.example.restaurant.domain.restaurantoperator.domain.RestaurantOperatorRepository;
+import com.example.restaurant.domain.owner.domain.Owner;
+import com.example.restaurant.domain.owner.domain.OwnerRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -12,8 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.transaction.Transactional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
@@ -21,22 +20,22 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class FoodChangeServiceTest {
     private final FoodRepository foodRepository;
     private final FoodChangeService foodChangeService;
-    private final RestaurantOperatorRepository restaurantOperatorRepository;
+    private final OwnerRepository ownerRepository;
     @Autowired
-    FoodChangeServiceTest(FoodRepository foodRepository, FoodChangeService foodChangeService, RestaurantOperatorRepository restaurantOperatorRepository){
+    FoodChangeServiceTest(FoodRepository foodRepository, FoodChangeService foodChangeService, OwnerRepository ownerRepository){
         this.foodRepository=foodRepository;
         this.foodChangeService = foodChangeService;
-        this.restaurantOperatorRepository = restaurantOperatorRepository;
+        this.ownerRepository = ownerRepository;
     }
     @Test
     void 음식_변경_정상작동() {
         //given
-        RestaurantOperator oper = new RestaurantOperator("사업자","1234","가게이름","123");
-        restaurantOperatorRepository.save(oper);
-        Food food = new Food("음식이름",1000,"음식정보","음식종류",oper.getId());
+        Owner owner = new Owner("owner","1234","restaurant","123");
+        ownerRepository.save(owner);
+        Food food = new Food("food",1000,"info","category",owner.getId());
         foodRepository.save(food);
         //When
-        FoodDto dto = new FoodDto("음식이름2",2000,"음식정보2","음식종류2");
+        FoodDto dto = new FoodDto("food2",2000,"info2","category2");
         boolean isChange = foodChangeService.Change(food.getId(),dto);
         //then
         assertTrue(isChange);
