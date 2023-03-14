@@ -1,6 +1,7 @@
 package com.example.restaurant.domain.user.domain;
 
 import lombok.Getter;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,5 +31,12 @@ public class User {
         this.nickName = nickName;
         this.phoneNum = phoneNum;
         this.homeAddress = homeAddress;
+    }
+    public boolean isValidPassword(PasswordEncoder passwordEncoder, String password) {
+        return passwordEncoder.matches(password, this.password);
+    }
+    public boolean isEncodePassword(PasswordEncoder passwordEncoder, String password) {
+        this.password = passwordEncoder.encode(password);
+        return passwordEncoder.matches(password, this.password);
     }
 }
