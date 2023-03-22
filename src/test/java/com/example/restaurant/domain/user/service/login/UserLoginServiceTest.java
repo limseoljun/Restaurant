@@ -1,6 +1,6 @@
 package com.example.restaurant.domain.user.service.login;
 
-import com.example.restaurant.controller.dto.user.UserDto;
+import com.example.restaurant.domain.servicedto.user.UserDto;
 import com.example.restaurant.domain.user.domain.User;
 import com.example.restaurant.domain.user.domain.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -34,7 +34,9 @@ class UserLoginServiceTest {
         User user = new User("user",bCryptPasswordEncoder.encode("1234"),"nick","phone","123");
         userRepository.save(user);
         UserDto dto = new UserDto("user","1234");
+
         Long loginId = userLoginService.validate(dto);
+
         assertEquals(user.getId(),loginId);
     }
 
@@ -42,8 +44,8 @@ class UserLoginServiceTest {
     void 유저_아이디_다름(){
         User user = new User("user",bCryptPasswordEncoder.encode("1234"),"nick","phone","123");
         userRepository.save(user);
-
         UserDto dto = new UserDto("user1","1234");
+
         Exception e = assertThrows(UsernameNotFoundException.class, () ->
                 userLoginService.validate(dto)
         );
@@ -55,8 +57,8 @@ class UserLoginServiceTest {
     void 유저_비밀번호_다름(){
         User user = new User("user",bCryptPasswordEncoder.encode("1234"),"nick","phone","123");
         userRepository.save(user);
-
         UserDto dto = new UserDto("user","12345");
+
         Exception e = assertThrows(BadCredentialsException.class, () ->
                 userLoginService.validate(dto)
         );
@@ -68,11 +70,12 @@ class UserLoginServiceTest {
     void 유저_아이디_비밀번호_다름(){
         User user = new User("user",bCryptPasswordEncoder.encode("1234"),"nick","phone","123");
         userRepository.save(user);
-
         UserDto dto = new UserDto("user1",bCryptPasswordEncoder.encode("12345"));
+
         Exception e = assertThrows(UsernameNotFoundException.class, () ->
                 userLoginService.validate(dto)
         );
+
         assertEquals(e.getMessage(),"Invalid User Name");
     }
 }

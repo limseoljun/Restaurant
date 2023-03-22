@@ -1,6 +1,6 @@
 package com.example.restaurant.domain.user.service.join;
 
-import com.example.restaurant.controller.dto.user.UserDto;
+import com.example.restaurant.domain.servicedto.user.UserDto;
 import com.example.restaurant.domain.user.domain.User;
 import com.example.restaurant.domain.user.domain.UserRepository;
 import org.junit.jupiter.api.Test;
