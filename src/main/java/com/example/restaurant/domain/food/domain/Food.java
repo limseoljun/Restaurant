@@ -17,15 +17,16 @@ public class Food {
     private int price;
     private String info;
     private String category;
-    private Long ownerId;
+    private Long restaurantId;
+
     public Food(){
     }
-    public Food(String name, int price, String info, String category,Long ownerId){
+    public Food(String name, int price, String info, String category,Long restaurantId){
         this.name=name;
         this.price=price;
         this.info=info;
         this.category=category;
-        this.ownerId=ownerId;
+        this.restaurantId=restaurantId;
     }
     public void update(String name,int price,String info,String category){
         this.name=name;
