@@ -1,6 +1,6 @@
 package com.example.restaurant.domain.owner.service.ownerjoin;
 
-import com.example.restaurant.controller.dto.owner.OwnerDto;
+import com.example.restaurant.domain.servicedto.owner.OwnerDto;
 import com.example.restaurant.domain.owner.domain.Owner;
 import com.example.restaurant.domain.owner.domain.OwnerRepository;
 import com.example.restaurant.exception.OwnerNameDuplicateException;
@@ -19,11 +19,9 @@ public class OwnerJoinServiceImpl implements OwnerJoinService {
     private final PasswordEncoder bCryptEncoder;
 
     @Override
-    public void Join(OwnerDto dto){
+    public void join(OwnerDto dto){
         Owner owner = new Owner(dto.getName(),
-                dto.getPassword(),
-                dto.getRestaurantName(),
-                dto.getRestaurantAddress()
+                dto.getPassword()
         );
         duplicatedOwnerName(dto);
         checkEncodingPw(owner,dto.getPassword());

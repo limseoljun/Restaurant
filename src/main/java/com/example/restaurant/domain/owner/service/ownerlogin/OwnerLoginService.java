@@ -1,7 +1,8 @@
 package com.example.restaurant.domain.owner.service.ownerlogin;
 
-import com.example.restaurant.controller.dto.owner.OwnerDto;
+import com.example.restaurant.domain.servicedto.owner.OwnerDto;
 
 public interface OwnerLoginService {
-    Long Login(OwnerDto dto);
+    Long login(OwnerDto dto);
+
 }
