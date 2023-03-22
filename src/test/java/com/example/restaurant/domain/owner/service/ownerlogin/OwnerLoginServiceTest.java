@@ -1,6 +1,6 @@
 package com.example.restaurant.domain.owner.service.ownerlogin;
 
-import com.example.restaurant.controller.dto.owner.OwnerDto;
+import com.example.restaurant.domain.servicedto.owner.OwnerDto;
 import com.example.restaurant.domain.owner.domain.Owner;
 import com.example.restaurant.domain.owner.domain.OwnerRepository;
 import com.example.restaurant.exception.OwnerNameNotFoundException;
@@ -31,22 +31,22 @@ class OwnerLoginServiceTest {
 
     @Test
     void 사업자_로그인_정상작동(){
-        Owner owner = new Owner("owner",bCryptEncoder.encode("1234"),"restaurant","123");
+        Owner owner = new Owner("owner",bCryptEncoder.encode("1234"));
         ownerRepository.save(owner);
         OwnerDto dto = new OwnerDto("owner","1234");
 
-        Long loginId = ownerLoginService.Login(dto);
+        Long loginId = ownerLoginService.login(dto);
 
         assertEquals(owner.getId(),loginId);
     }
     @Test
     void 사업자_아이디_다름(){
-        Owner owner = new Owner("owner",bCryptEncoder.encode("1234"),"restaurant","123");
+        Owner owner = new Owner("owner",bCryptEncoder.encode("1234"));
         ownerRepository.save(owner);
         OwnerDto dto = new OwnerDto("owner1","1234");
 
         Exception e = assertThrows(OwnerNameNotFoundException.class, ()->
-                 ownerLoginService.Login(dto)
+                 ownerLoginService.login(dto)
         );
 
         assertEquals(e.getMessage(),"Invalid Owner Name");
@@ -54,12 +54,12 @@ class OwnerLoginServiceTest {
 
     @Test
     void 사업자_비밀번호_다름(){
-        Owner owner = new Owner("owner",bCryptEncoder.encode("1234"),"restaurant","123");
+        Owner owner = new Owner("owner",bCryptEncoder.encode("1234"));
         ownerRepository.save(owner);
         OwnerDto dto = new OwnerDto("owner","12345");
 
         Exception e = assertThrows(BadCredentialsException.class, ()->
-                ownerLoginService.Login(dto)
+                ownerLoginService.login(dto)
         );
 
         assertEquals(e.getMessage(),"Invalid Owner Password");

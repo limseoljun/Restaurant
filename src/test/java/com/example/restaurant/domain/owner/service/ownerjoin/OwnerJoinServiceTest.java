@@ -1,6 +1,6 @@
 package com.example.restaurant.domain.owner.service.ownerjoin;
 
-import com.example.restaurant.controller.dto.owner.OwnerDto;
+import com.example.restaurant.domain.servicedto.owner.OwnerDto;
 import com.example.restaurant.domain.owner.domain.Owner;
 import com.example.restaurant.domain.owner.domain.OwnerRepository;
 import com.example.restaurant.exception.OwnerNameDuplicateException;
@@ -28,25 +28,23 @@ class OwnerJoinServiceTest {
 
     @Test
     void 사업자_가입_정상작동(){
-        OwnerDto dto = new OwnerDto("owner","1234","restaurant","123");
-        ownerJoinService.Join(dto);
+        OwnerDto dto = new OwnerDto("owner","1234");
+        ownerJoinService.join(dto);
 
         Owner owner = ownerRepository.findByName("owner").get();
 
         assertEquals(dto.getName(),owner.getName());
         assertNotEquals(dto.getPassword(),owner.getPassword());
-        assertEquals(dto.getRestaurantName(),owner.getRestaurantName());
-        assertEquals(dto.getRestaurantAddress(),owner.getRestaurantAddress());
     }
 
     @Test
     void 사업자_아이디_중복(){
-        Owner owner = new Owner("owner","1234","restaurant","123");
+        Owner owner = new Owner("owner","1234");
         ownerRepository.save(owner);
-        OwnerDto dto = new OwnerDto("owner","2345","restaurant2","234");
+        OwnerDto dto = new OwnerDto("owner","2345");
 
         Exception e = assertThrows(OwnerNameDuplicateException.class, () ->
-                ownerJoinService.Join(dto)
+                ownerJoinService.join(dto)
         );
 
         assertEquals("Duplicate Owner Name",e.getMessage());
