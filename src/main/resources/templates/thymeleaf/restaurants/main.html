@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+음식점 리스트
+<div th:each="list : ${restaurantList}">
+    <form action="/restaurants/main" method="post">
+        <input type="hidden" name="restaurantId" th:value="${list.getId()}">
+        이름<input type="submit" th:value="${list.getName()}" >
+    </form>
+</div>
+<a th:href="@{/user/my-page}">내페이지 가기</a>
+</body>
+</html>

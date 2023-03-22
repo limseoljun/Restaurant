@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+식당
+<div th:text="${restaurantInfo.getName()}"></div>
+주소
+<div th:text="${restaurantInfo.getBusinessAddress()}"></div>
+전번
+<div th:text="${restaurantInfo.getCallNum()}"></div>
+
+음식
+<div th:each="list : ${foodList}">
+    <div>
+        음식 이름
+        <div th:text="${list.getName()}"></div>
+        음식 가격
+        <div th:text="${list.getPrice()}"></div>
+        음식 정복
+        <div th:text="${list.getInfo()}"></div>
+        음식 종류
+        <div th:text="${list.getCategory()}"></div>
+    </div>
+</div>
+===========================================================
+주문
+<div th:if="${orderInList}!=null">
+    <div th:each="list: ${orderInList}">
+        주문 시간:<div th:text="${list.getTime()}"></div>
+        주문자 닉네임:<div th:text="${list.getUser().getNickName()}"></div>
+        주문자 주소:<div th:text="${list.getUser().getHomeAddress()}"></div>
+        주문자 연락처:<div th:text="${list.getUser().getPhoneNum()}"></div>
+        <form th:action="@{/owner/order-processing}">
+            <input type="hidden" name="orderId" th:value="${list.getId()}">
+            <input type="submit" value="주문처리">
+        </form>
+    </div>
+</div>
+=============================================================
+<a th:href="@{/food/add}">음식추가</a>
+</body>
+</html>

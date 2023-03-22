@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+사업자 페이지
+사업자 이름
+<div>식당 이름  식당 주소 식당 전화번호</div>
+<div th:each="list: ${restaurantList}">
+    <form th:action="@{/owner/my-page}" method="post">
+        <input type="hidden" name="restaurantId" th:value="${list.getId()}">
+        <button type="submit" th:text="${list.getName()}"></button>
+    </form>
+<div th:text="${list.getBusinessAddress()}"></div>
+<div th:text="${list.getCallNum()}"></div>
+</div>
+
+
+<a th:href="@{/restaurants/add}">식당 추가</a>
+</body>
+</html>
