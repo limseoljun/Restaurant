@@ -8,8 +8,6 @@ import java.util.Optional;
 public interface OwnerRepository extends JpaRepository <Owner,Long>{
 
     boolean existsByName(String name);
-    boolean existsByPassword(String password);
-
     boolean existsByNameAndPassword(String name, String password);
 
     Optional<Owner> findByName(String owner);
