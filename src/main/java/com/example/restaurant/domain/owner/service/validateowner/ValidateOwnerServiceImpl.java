@@ -1,6 +1,6 @@
 package com.example.restaurant.domain.owner.service.validateowner;
 
-import com.example.restaurant.controller.dto.owner.OwnerDto;
+import com.example.restaurant.domain.servicedto.owner.OwnerDto;
 import com.example.restaurant.domain.owner.domain.OwnerRepository;
 import com.example.restaurant.exception.OwnerNameAndPasswordDifferentException;
 import lombok.RequiredArgsConstructor;
