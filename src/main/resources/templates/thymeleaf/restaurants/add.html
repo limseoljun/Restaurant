@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/restaurants/add}" method="post">
+  <div class="input">
+    <label for="name">식당 이름</label>
+    <input type="text" name="name" id="name">
+    <span class="spin"></span>
+  </div>
+
+  <div class="input">
+    <label for="businessAddress">식당 주소</label>
+    <input type="text" name="businessAddress" id="businessAddress">
+    <span class="spin"></span>
+  </div>
+
+  <div class="input">
+    <label for="callNum">전화번호</label>
+    <input type="text" name="callNum" id="callNum">
+    <span class="spin"></span>
+  </div>
+
+  <div class="button">
+    <button><span>NEXT</span></button>
+  </div>
+</form>
+
+</body>
+</html>
