@@ -14,5 +14,22 @@ public class Restaurant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private String orderCount;
+    private String businessAddress;
+    private String callNum;
+    private Long ownerId;
+    public Restaurant(){
+
+    }
+    public Restaurant(String name,String businessAddress,String callNum,Long ownerId){
+        this.name=name;
+        this.businessAddress=businessAddress;
+        this.callNum=callNum;
+        this.ownerId=ownerId;
+    }
+
+    public void update(String name, String businessAddress, String callNum) {
+        this.name = name;
+        this.businessAddress =businessAddress;
+        this.callNum = callNum;
+    }
 }
