@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div th:text="${food.getName()}"></div>
+<div th:text="${food.getPrice()}"></div>
+<form th:action="@{/order/food-select}" method="post">
+    <input type="hidden"name="foodId"th:value="${food.getId()}">
+    <input type="hidden"name="restaurantId"th:value="${food.getRestaurantId()}">
+    <input type="number" name="count" min="1" max="10" value="1">
+    <input type="submit" name="basketOrPay" value="장바구니">
+    <input type="submit" name="basketOrPay" value="결제">
+</form>
+</body>
+</html>
