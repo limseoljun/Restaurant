@@ -1,7 +1,7 @@
 package com.example.restaurant.domain.order.menu.domain;
 
 import com.example.restaurant.domain.food.domain.Food;
-import com.example.restaurant.domain.order.info.domain.Order;
+import com.example.restaurant.domain.order.info.domain.OrderIn;
 import com.example.restaurant.domain.user.domain.User;
 import lombok.Getter;
 
@@ -24,18 +24,25 @@ public class OrderMenu {
     @JoinColumn(name = "user_id")
     private User user;
     @ManyToOne
-    @JoinColumn(name = "order_id")
-    private Order order;
+    @JoinColumn(name = "order_in_id")
+    private OrderIn orderIn;
 
-    public OrderMenu(int count, User user, Food food, Order order, String time){}
-    public OrderMenu(int count, int price, User user, Order order, Food food,String time){
+    public OrderMenu(){}
+    public OrderMenu(int count, String time, User user, Food food, OrderIn orderIn){
         this.count=count;
-        this.price=price;
+        this.price=food.getPrice()* count;
         this.user=user;
-        this.order=order;
+        this.orderIn = orderIn;
         this.food=food;
         this.time=time;
-        this.result="Received";
+        this.result="Payment waiting";
+    }
+    public void update (int count, String time, Food food){
+        this.count=this.count+count;
+        this.price=this.price+(food.getPrice()* count);
+        this.food=food;
+        this.time=time;
+        this.result="Payment waiting";
     }
     public void updateResult(String result){
         this.result=result;
