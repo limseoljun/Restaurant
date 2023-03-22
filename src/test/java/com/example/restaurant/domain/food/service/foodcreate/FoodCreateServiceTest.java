@@ -1,10 +1,10 @@
 package com.example.restaurant.domain.food.service.foodcreate;
 
-import com.example.restaurant.controller.dto.food.FoodDto;
+import com.example.restaurant.domain.servicedto.food.FoodDto;
 import com.example.restaurant.domain.food.domain.Food;
 import com.example.restaurant.domain.food.domain.FoodRepository;
-import com.example.restaurant.domain.owner.domain.Owner;
-import com.example.restaurant.domain.owner.domain.OwnerRepository;
+import com.example.restaurant.domain.restaurant.domain.Restaurant;
+import com.example.restaurant.domain.restaurant.domain.RestaurantRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -23,21 +23,23 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class FoodCreateServiceTest {
     private final FoodRepository foodRepository;
     private final FoodCreateService foodCreateService;
-    private final OwnerRepository ownerRepository;
+    private final RestaurantRepository restaurantRepository;
     @Autowired
-    FoodCreateServiceTest(FoodRepository foodRepository, FoodCreateService foodCreateService, OwnerRepository ownerRepository) {
+    FoodCreateServiceTest(FoodRepository foodRepository, FoodCreateService foodCreateService, RestaurantRepository restaurantRepository) {
         this.foodRepository = foodRepository;
         this.foodCreateService = foodCreateService;
-        this.ownerRepository = ownerRepository;
+        this.restaurantRepository = restaurantRepository;
     }
 
     @Test
     void 생성_정상작동(){
         FoodDto dto = new FoodDto("name",1000,"info","category");
-        Owner owner =  new Owner("owner","1234","restaurant","123");
-        ownerRepository.save(owner);
-        boolean isCreate = foodCreateService.Create(dto, owner.getId());
-        List<Food> list = foodRepository.findByOwnerId(owner.getId());
+        Restaurant restaurant = new Restaurant("restaurant","1234","12345678",1L);
+        restaurantRepository.save(restaurant);
+
+        boolean isCreate = foodCreateService.Create(dto, restaurant.getId());
+        List<Food> list = foodRepository.findByRestaurantId(restaurant.getId());
+
         assertTrue(isCreate);
         assertEquals("name",list.get(0).getName());
         assertEquals(1000,list.get(0).getPrice());

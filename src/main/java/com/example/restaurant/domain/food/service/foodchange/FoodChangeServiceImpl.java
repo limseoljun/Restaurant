@@ -1,6 +1,6 @@
 package com.example.restaurant.domain.food.service.foodchange;
 
-import com.example.restaurant.controller.dto.food.FoodDto;
+import com.example.restaurant.domain.servicedto.food.FoodDto;
 import com.example.restaurant.domain.food.domain.Food;
 import com.example.restaurant.domain.food.domain.FoodRepository;
 import lombok.RequiredArgsConstructor;

@@ -1,7 +1,7 @@
 package com.example.restaurant.domain.food.service.foodcreate;
 
-import com.example.restaurant.controller.dto.food.FoodDto;
+import com.example.restaurant.domain.servicedto.food.FoodDto;
 
 public interface FoodCreateService {
-    boolean Create(FoodDto dto, Long ownerId);
+    boolean Create(FoodDto dto, Long restaurantId);
 }
