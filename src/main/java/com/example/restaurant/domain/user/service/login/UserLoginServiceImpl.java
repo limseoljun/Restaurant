@@ -1,6 +1,6 @@
 package com.example.restaurant.domain.user.service.login;
 
-import com.example.restaurant.controller.dto.user.UserDto;
+import com.example.restaurant.domain.servicedto.user.UserDto;
 import com.example.restaurant.domain.user.domain.User;
 import com.example.restaurant.domain.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
