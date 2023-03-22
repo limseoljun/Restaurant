@@ -1,4 +1,4 @@
-package com.example.restaurant.controller.dto.user;
+package com.example.restaurant.domain.servicedto.user;
 
 import lombok.Data;
 
@@ -23,8 +23,8 @@ public class UserDto {
     public UserDto(String name, String password){
         this.name=name;
         this.password=password;
-        nickName = null;
-        phoneNum = null;
-        homeAddress = null;
+        nickName = "";
+        phoneNum = "";
+        homeAddress = "";
     }
 }
