@@ -1,6 +1,5 @@
 package com.example.restaurant.domain.order.info.domain;
 
-import com.example.restaurant.domain.owner.domain.Owner;
 import com.example.restaurant.domain.restaurant.domain.Restaurant;
 import com.example.restaurant.domain.user.domain.User;
 import lombok.Getter;
@@ -9,7 +8,7 @@ import javax.persistence.*;
 
 @Entity
 @Getter
-public class Order {
+public class OrderIn {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,12 +21,12 @@ public class Order {
     @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
 
-    public Order(){}
-    public Order(String time,User user,Restaurant restaurant){
+    public OrderIn(){}
+    public OrderIn(String time, User user, Restaurant restaurant){
         this.time=time;
         this.user=user;
         this.restaurant=restaurant;
-        this.result="Received";
+        this.result="Payment waiting";
     }
 
     public void updateResult(String result){
