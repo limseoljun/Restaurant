@@ -1,4 +1,4 @@
-package com.example.restaurant.controller.dto.food;
+package com.example.restaurant.domain.servicedto.food;
 
 import lombok.Data;
 
