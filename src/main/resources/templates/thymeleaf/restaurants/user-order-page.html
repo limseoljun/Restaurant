@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:each="list:${foodList}">
+    <form th:action="@{/order/food-select}">
+        이름<input type="submit"th:value="${list.getName()}">
+        <input type="hidden" name="foodId" th:value="${list.getId()}">
+    </form>
+    가격<div th:text="${list.getPrice()}"></div>
+    정보<div th:text="${list.getInfo()}"></div>
+    종류<div th:text="${list.getCategory()}"></div>
+</div>
+    <div th:if="${orderId != null}">
+        ================================
+        장바구니 있음!!!!!!!
+        <form th:action="@{/order/basket}">
+            <input type="hidden" name="orderId" th:value="${orderId}">
+            <input type="submit" value="장바구니">
+        </form>
+    </div>
+
+</body>
+</html>
