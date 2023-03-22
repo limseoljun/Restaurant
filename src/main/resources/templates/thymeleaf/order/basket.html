@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+장바구니
+
+<div th:each="list: ${orderMenuList}">
+    음식이름
+    <div th:text="${list.getFood().getName()}"></div>
+    음식가격
+    <div th:text="${list.getFood().getPrice()}"></div>
+    <form th:action="@{/order/basket}" method="post">
+        <input type="hidden" name="result" th:value="Ready">
+        <input type="number" name="count" min="1" max="10" th:value="${list.getCount()}">
+    </form>
+    총가격
+    <div th:text="${list.getPrice()}"></div>
+
+<form th:action="@{/pay}">
+    <input type="hidden" name="orderId" th:value="${list.getOrderIn().getId()}">
+    <input type="submit" value="결제하기">
+</form>
+</div>
+</body>
+</html>
