@@ -39,7 +39,7 @@ class OrderInAddServiceTest {
         Restaurant restaurant = new Restaurant("restaurant","BAddress","111",1L);
         restaurantRepository.save(restaurant);
 
-        orderAddService.add(user.getId(),restaurant.getOwnerId());
+        orderAddService.add(user.getId(),restaurant.getOwnerId(),restaurant.getId());
         OrderIn orderIn = orderInRepository.findByUserId(user.getId()).get(0);
 
         assertEquals(orderIn.getRestaurant(),restaurant);
