@@ -1,33 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+  <meta charset="UTF-8">
+  <title>Title</title>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+  <style>
+  </style>
 </head>
 <body>
-<form th:action="@{/restaurants/add}" method="post">
-  <div class="input">
-    <label for="name">식당 이름</label>
-    <input type="text" name="name" id="name">
-    <span class="spin"></span>
-  </div>
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-6 mx-auto">
+      <form th:action="@{/restaurants/add}" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+          <label for="file">사진 이미지 업로드</label>
+          <input type="file" class="form-control-file" id="file" name="file" accept="image/*">
+        </div>
 
-  <div class="input">
-    <label for="businessAddress">식당 주소</label>
-    <input type="text" name="businessAddress" id="businessAddress">
-    <span class="spin"></span>
-  </div>
+        <div class="form-group">
+          <label for="name">식당 이름</label>
+          <input type="text" class="form-control" name="name" id="name">
+        </div>
 
-  <div class="input">
-    <label for="callNum">전화번호</label>
-    <input type="text" name="callNum" id="callNum">
-    <span class="spin"></span>
-  </div>
+        <div class="form-group">
+          <label for="businessAddress">식당 주소</label>
+          <input type="text" class="form-control" name="businessAddress" id="businessAddress">
+        </div>
 
-  <div class="button">
-    <button><span>NEXT</span></button>
-  </div>
-</form>
+        <div class="form-group">
+          <label for="callNum">전화번호</label>
+          <input type="text" class="form-control" name="callNum" id="callNum">
+        </div>
 
+        <button type="submit" class="btn btn-primary">변경</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </body>
 </html>

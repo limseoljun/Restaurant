@@ -1,10 +1,7 @@
 package com.example.restaurant.controller.owner.dto;
 
-import com.example.restaurant.domain.servicedto.owner.OwnerDto;
 import com.example.restaurant.domain.servicedto.restaurant.RestaurantDto;
 import lombok.Getter;
-
-import javax.validation.constraints.NotBlank;
 
 @Getter
 public class RestaurantAddControllerDto {

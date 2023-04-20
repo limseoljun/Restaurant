@@ -3,26 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
-<body>
-장바구니
-
-<div th:each="list: ${orderMenuList}">
-    음식이름
-    <div th:text="${list.getFood().getName()}"></div>
-    음식가격
-    <div th:text="${list.getFood().getPrice()}"></div>
-    <form th:action="@{/order/basket}" method="post">
+<body onload="setInitialTotalPrice()">
+<div class="container my-5">
+    <h1 class="mb-5">장바구니</h1>
+    <form th:action="@{/pay}" method="post">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">음식 사진</th>
+                <th scope="col">음식 이름</th>
+                <th scope="col">가격</th>
+                <th scope="col">수량</th>
+                <th scope="col">합계</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="list: ${orderMenuList}">
+                <td>
+                    <img th:src="${list.getFood().getImagePath()}" style="max-width: 100px; height: auto;">
+                </td>
+                <td th:text="${list.getFood().getName()}"></td>
+                <td th:text="${list.getFood().getPrice()}"></td>
+                <td>
+                    <input type="number" name="count" class="form-control" min="1" max="10"
+                           th:value="${list.getCount()}" onchange="updateTotalPrice(this)">
+                </td>
+                <td class="total-price" th:text="${list.getCount() * list.getFood().getPrice()}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="form-group">
+            <label for="basket-price">총가격:</label>
+            <span id="basket-price"></span>
+        </div>
+        <input type="hidden" name="orderInId" th:value="${orderMenuList.get(0).getOrderIn().getId()}">
         <input type="hidden" name="result" th:value="Ready">
-        <input type="number" name="count" min="1" max="10" th:value="${list.getCount()}">
+        <button type="submit" class="btn btn-primary">결제하기</button>
     </form>
-    총가격
-    <div th:text="${list.getPrice()}"></div>
-
-<form th:action="@{/pay}">
-    <input type="hidden" name="orderId" th:value="${list.getOrderIn().getId()}">
-    <input type="submit" value="결제하기">
-</form>
 </div>
+<script src="/static/js/basket.js"></script>
 </body>
 </html>

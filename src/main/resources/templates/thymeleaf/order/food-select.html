@@ -3,17 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Bootstrap CDN link -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/order/food-select.css">
 </head>
 <body>
 
-<div th:text="${food.getName()}"></div>
-<div th:text="${food.getPrice()}"></div>
-<form th:action="@{/order/food-select}" method="post">
-    <input type="hidden"name="foodId"th:value="${food.getId()}">
-    <input type="hidden"name="restaurantId"th:value="${food.getRestaurantId()}">
-    <input type="number" name="count" min="1" max="10" value="1">
-    <input type="submit" name="basketOrPay" value="장바구니">
-    <input type="submit" name="basketOrPay" value="결제">
-</form>
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-6">
+            <img th:src="${food.getImagePath()}" class="img-fluid">
+        </div>
+        <div class="col-md-6">
+            <h3 th:text="${food.getName()}"></h3>
+            <p th:text="${food.getPrice()}"></p>
+            <form th:action="@{/order/food-select}" method="post">
+                <input type="hidden" name="foodId" th:value="${food.getId()}">
+                <input type="hidden" name="restaurantId" th:value="${food.getRestaurantId()}">
+                <div class="mb-3">
+                    <label for="count" class="form-label">수량:</label>
+                    <input type="number" id="count" name="count" min="1" max="10" value="1" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <button type="submit" name="basketOrPay" value="장바구니" class="btn btn-outline-secondary">장바구니</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JavaScript CDN link -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
 </body>
 </html>

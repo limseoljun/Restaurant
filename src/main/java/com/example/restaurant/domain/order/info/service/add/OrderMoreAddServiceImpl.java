@@ -2,8 +2,6 @@ package com.example.restaurant.domain.order.info.service.add;
 
 import com.example.restaurant.domain.order.info.domain.OrderIn;
 import com.example.restaurant.domain.order.info.domain.OrderInRepository;
-import com.example.restaurant.domain.restaurant.domain.Restaurant;
-import com.example.restaurant.domain.restaurant.domain.RestaurantRepository;
 import com.example.restaurant.domain.servicedto.order.OrderDto;
 import com.example.restaurant.domain.order.menu.service.add.OrderMenuAddService;
 import lombok.RequiredArgsConstructor;

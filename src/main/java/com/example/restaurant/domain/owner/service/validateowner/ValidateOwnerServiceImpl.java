@@ -1,9 +1,11 @@
 package com.example.restaurant.domain.owner.service.validateowner;
 
+import com.example.restaurant.domain.owner.domain.Owner;
 import com.example.restaurant.domain.servicedto.owner.OwnerDto;
 import com.example.restaurant.domain.owner.domain.OwnerRepository;
-import com.example.restaurant.exception.OwnerNameAndPasswordDifferentException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -13,10 +15,14 @@ import javax.transaction.Transactional;
 @RequiredArgsConstructor
 public class ValidateOwnerServiceImpl implements ValidateOwnerService {
     private final OwnerRepository ownerRepository;
+    private final PasswordEncoder bCryptEncoder;
+
     @Override
-    public void validte(OwnerDto dto) {
-        if (!ownerRepository.existsByNameAndPassword(dto.getName(),dto.getPassword())){
-            throw new OwnerNameAndPasswordDifferentException();
+    public Long validate(OwnerDto dto) {
+        Owner owner = ownerRepository.validateName(dto.getName());
+        if (!owner.isValidPassword(bCryptEncoder, dto.getPassword())) {
+            throw new BadCredentialsException("Invalid Owner Password");
         }
+        return owner.getId();
     }
 }

@@ -3,43 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <!-- 부트스트랩 CDN 링크 추가 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/owner/my-restaurant.css">
 </head>
 <body>
-식당
-<div th:text="${restaurantInfo.getName()}"></div>
-주소
-<div th:text="${restaurantInfo.getBusinessAddress()}"></div>
-전번
-<div th:text="${restaurantInfo.getCallNum()}"></div>
+<!-- 전체 컨테이너 -->
+<div class="container">
+    <div class="my-5">
+        <!-- 식당 정보 -->
+        <h2>식당</h2>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title" th:text="${restaurantInfo.getName()}"></h5>
+                <p class="card-text" th:text="${restaurantInfo.getBusinessAddress()}"></p>
+                <p class="card-text" th:text="${restaurantInfo.getCallNum()}"></p>
+            </div>
+        </div>
+    </div>
 
-음식
-<div th:each="list : ${foodList}">
-    <div>
-        음식 이름
-        <div th:text="${list.getName()}"></div>
-        음식 가격
-        <div th:text="${list.getPrice()}"></div>
-        음식 정복
-        <div th:text="${list.getInfo()}"></div>
-        음식 종류
-        <div th:text="${list.getCategory()}"></div>
+    <div class="my-5">
+        <!-- 음식 리스트 -->
+        <h2>음식</h2>
+        <div class="row">
+            <div class="col-md-4" th:each="list : ${foodList}">
+                <div class="card mb-3">
+                    <img class="card-img-top" th:src="${list.getImagePath}" alt="음식 이미지">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${list.getName()}"></h5>
+                        <p class="card-text" th:text="${list.getPrice()}"></p>
+                        <p class="card-text" th:text="${list.getInfo()}"></p>
+                        <p class="card-text" th:text="${list.getCategory()}"></p>
+                        <div class="btn-group">
+                            <form th:action="@{/food/delete}" method="get">
+                                <input type="hidden" name="foodId" th:value="${list.getId()}">
+                                <button type="submit" class="btn btn-danger">삭제</button>
+                            </form>
+                            <form th:action="@{/food/validate-update}" method="get">
+                                <input type="hidden" name="foodId" th:value="${list.getId()}">
+                                <button type="submit" class="btn btn-primary">변경</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
-===========================================================
-주문
-<div th:if="${orderInList}!=null">
-    <div th:each="list: ${orderInList}">
-        주문 시간:<div th:text="${list.getTime()}"></div>
-        주문자 닉네임:<div th:text="${list.getUser().getNickName()}"></div>
-        주문자 주소:<div th:text="${list.getUser().getHomeAddress()}"></div>
-        주문자 연락처:<div th:text="${list.getUser().getPhoneNum()}"></div>
-        <form th:action="@{/owner/order-processing}">
-            <input type="hidden" name="orderId" th:value="${list.getId()}">
-            <input type="submit" value="주문처리">
-        </form>
+
+    <div class="my-5">
+        <!-- 주문 버튼 -->
+
+        <!-- HTML 코드 -->
+        <div th:if="${!orderInList.isEmpty()}" id="orderBtnWrapper">
+            <a data-th-href="@{/owner/order-page}" class="btn btn-success">주문!!</a>
+        </div>
+
+        <!-- 추가, 삭제, 변경 버튼 -->
+        <div class="btn-group">
+            <a th:href="@{/food/add}" class="btn btn-primary">음식추가</a>
+            <a th:href="@{/restaurants/delete}" class="btn btn-danger">식당 삭제</a>
+            <a th:href="@{/restaurants/validate-update}" class="btn btn-warning">식당 정보 변경</a>
+        </div>
     </div>
+
 </div>
-=============================================================
-<a th:href="@{/food/add}">음식추가</a>
+<!-- 부트스트랩 스크립트 CDN 링크 추가 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

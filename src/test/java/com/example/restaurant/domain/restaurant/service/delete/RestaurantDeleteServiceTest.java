@@ -5,11 +5,11 @@ import com.example.restaurant.domain.owner.domain.OwnerRepository;
 import com.example.restaurant.domain.restaurant.domain.Restaurant;
 import com.example.restaurant.domain.restaurant.domain.RestaurantRepository;
 import com.example.restaurant.domain.servicedto.owner.OwnerDto;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.transaction.Transactional;
 
@@ -23,17 +23,19 @@ class RestaurantDeleteServiceTest {
     private final RestaurantDeleteService restaurantDeleteService;
     private final OwnerRepository ownerRepository;
     private final RestaurantRepository restaurantRepository;
+    private final PasswordEncoder bCryptEncoder;
 
     @Autowired
-    RestaurantDeleteServiceTest(RestaurantDeleteService restaurantDeleteService, OwnerRepository ownerRepository, RestaurantRepository restaurantRepository) {
+    RestaurantDeleteServiceTest(RestaurantDeleteService restaurantDeleteService, OwnerRepository ownerRepository, RestaurantRepository restaurantRepository, PasswordEncoder bCryptEncoder) {
         this.restaurantDeleteService = restaurantDeleteService;
         this.ownerRepository = ownerRepository;
         this.restaurantRepository = restaurantRepository;
+        this.bCryptEncoder = bCryptEncoder;
     }
 
     @Test
     void 식당_삭제_정상작동(){
-        Owner owner = new Owner("owner","123");
+        Owner owner = new Owner("owner",bCryptEncoder.encode("123"));
         ownerRepository.save(owner);
         Restaurant restaurant = new Restaurant("restaurant","address","000",owner.getId());
         restaurantRepository.save(restaurant);

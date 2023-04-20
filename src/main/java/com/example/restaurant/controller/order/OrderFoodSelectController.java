@@ -3,7 +3,6 @@ package com.example.restaurant.controller.order;
 import com.example.restaurant.controller.order.dto.OrderFoodControllerDto;
 import com.example.restaurant.domain.food.domain.Food;
 import com.example.restaurant.domain.food.domain.FoodRepository;
-import com.example.restaurant.domain.order.info.domain.OrderIn;
 import com.example.restaurant.domain.order.info.domain.OrderInRepository;
 import com.example.restaurant.domain.order.info.service.add.OrderAddService;
 import com.example.restaurant.domain.order.info.service.add.OrderMoreAddService;
@@ -17,12 +16,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
-import java.util.List;
 import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
-@SessionAttributes("orderId")
+@SessionAttributes("orderInId")
 @RequestMapping(value = "/order/food-select")
 public class OrderFoodSelectController {
     private final RestaurantRepository restaurantRepository;
@@ -32,6 +30,10 @@ public class OrderFoodSelectController {
     private final OrderInRepository orderInRepository;
     private final FoodRepository foodRepository;
 
+    /**
+     * view에서 foodId 를 받아 food 객체를 찾아 모델에 넣음
+     * session 초기화
+     */
     @GetMapping("")
     public String get(@Param("foodId")Long foodId, SessionStatus sessionStatus, Model model){
         sessionStatus.setComplete();
@@ -40,19 +42,24 @@ public class OrderFoodSelectController {
         return "thymeleaf/order/food-select";
     }
 
+    /**
+     * view에서 userId 와 basketOrPay (장바구니 결제 여부) , 주문 정보를 받아 주문 리스트 생성
+     * 주문 리스트가 존재하지 않으면 새로 리스트 생성 존재하면 원래 리스트를 가져와 추가
+     * orderInId 세션 저장 모델로 넘김
+     */
     @PostMapping("")
     public String post(@SessionAttribute("userId")Long userId, @RequestParam("basketOrPay")String basketOrPay,
                        OrderFoodControllerDto dto, Model model){
         Optional<Restaurant> restaurant = restaurantRepository.findById(dto.getRestaurantId());
         if (basketOrPay.equals("장바구니")) {
-            Long orderId = 0L;
+            Long orderInId = null;
             if(!orderInRepository.existsByUserIdAndResult(userId,"Payment waiting")){
-                orderId = orderAddService.add(userId, restaurant.get().getOwnerId());
-                orderMenuAddService.add(userId,dto.convertDto().convertOrderMenuDto(orderId));
+                orderInId = orderAddService.add(userId, restaurant.get().getOwnerId(),restaurant.get().getId());
+                orderMenuAddService.add(userId,dto.convertDto().convertOrderMenuDto(orderInId));
             }else{
-                orderId = orderMoreAddService.more(userId,dto.convertDto());
+                orderInId = orderMoreAddService.more(userId,dto.convertDto());
             }
-            model.addAttribute("orderId",orderId);
+            model.addAttribute("orderInId",orderInId);
             return "redirect:/restaurants/user-order-page";
         }
         return "redirect:/pay";

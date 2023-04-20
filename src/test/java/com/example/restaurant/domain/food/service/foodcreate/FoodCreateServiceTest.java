@@ -9,13 +9,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mock.web.MockMultipartFile;
 
 import javax.transaction.Transactional;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
@@ -33,11 +33,17 @@ class FoodCreateServiceTest {
 
     @Test
     void 생성_정상작동(){
+        byte[] imageBytes = "test-image".getBytes();
+        String imageName = "test-image.jpg";
+        MockMultipartFile file = new MockMultipartFile("file", imageName, "image/jpeg", imageBytes);
+
         FoodDto dto = new FoodDto("name",1000,"info","category");
+
         Restaurant restaurant = new Restaurant("restaurant","1234","12345678",1L);
         restaurantRepository.save(restaurant);
 
-        boolean isCreate = foodCreateService.Create(dto, restaurant.getId());
+        boolean isCreate = foodCreateService.create(dto, restaurant.getId(), file);
+
         List<Food> list = foodRepository.findByRestaurantId(restaurant.getId());
 
         assertTrue(isCreate);
@@ -45,5 +51,6 @@ class FoodCreateServiceTest {
         assertEquals(1000,list.get(0).getPrice());
         assertEquals("info",list.get(0).getInfo());
         assertEquals("category",list.get(0).getCategory());
+        assertNotNull(list.get(0).getImagePath());
     }
 }

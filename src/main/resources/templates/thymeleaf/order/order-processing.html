@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- 부트스트랩 링크 추가 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <!-- 추가한 CSS 파일 링크 -->
+    <link rel="stylesheet" href="/static/css/owner/order-processing.css">
+</head>
+<body>
+<div class="container">
+    <!-- 각 주문 메뉴 리스트에 대한 카드 생성 -->
+    <div class="row">
+        <div class="col-md-4" th:each="list:${orderMenuList}">
+            <div class="card">
+                <img class="card-img-top" th:src="${list.getFood().getImagePath()}" alt="음식사진">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${list.getFood().getName()}"></h5>
+                    <p class="card-text">주문수: <span th:text="${list.getCount()}"></span></p>
+                    <p class="card-text">가격: <span th:text="${list.getPrice()}"></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 주문자, 주소, 연락처 정보 -->
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <p>주문자: <span th:text="${orderIn.getUser().getName()}"></span></p>
+            <p>주소: <span th:text="${orderIn.getUser().getHomeAddress()}"></span></p>
+            <p>연락처: <span th:text="${orderIn.getUser().getPhoneNum()}"></span></p>
+        </div>
+    </div>
+    <!-- 주문 취소 및 승인 버튼 -->
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <form th:action="@{/owner/result-cancel}">
+                <input type="hidden" name="orderInId" th:value="${orderMenuList.get(0).getOrderIn().getId()}">
+                <input type="hidden" name="userId" th:value="${orderMenuList.get(0).getUser().getId()}">
+                <button type="submit" class="btn btn-danger">취소</button>
+            </form>
+            <form th:action="@{/owner/result-cooking}">
+                <input type="hidden" name="orderInId" th:value="${orderMenuList.get(0).getOrderIn().getId()}">
+                <input type="hidden" name="userId" th:value="${orderMenuList.get(0).getUser().getId()}">
+                <button type="submit" class="btn btn-success">승인</button>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- 부트스트랩 자바스크립트 링크 추가 -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>

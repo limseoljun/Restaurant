@@ -1,0 +1,74 @@
+.card {
+    margin-bottom: 20px;
+}
+
+.card-img-top {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+/* 전체 화면을 어둡게 덮는 모달 스타일 */
+.modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+/* 모달의 크기와 위치를 조절하는 스타일 */
+.modal-dialog {
+    max-width: 400px;
+    margin: 10% auto;
+}
+
+/* 모달 내부의 내용을 중앙 정렬하는 스타일 */
+.modal-body {
+    text-align: center;
+}
+
+/* 모달 제목 스타일 */
+.modal-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* 모달 내부의 버튼 스타일 */
+.modal-footer button {
+    width: 100px;
+}
+
+/* 모달 내부의 오류 메시지 스타일 */
+.modal-body .alert {
+    margin-top: 10px;
+    display: none;
+}
+
+/* 테이블 스타일 */
+.table {
+    margin-bottom: 20px;
+}
+
+/* 승인 버튼 스타일 */
+.btn-success {
+    color: #fff;
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.btn-success:hover {
+    color: #fff;
+    background-color: #218838;
+    border-color: #1e7e34;
+}
+
+/* 취소 버튼 스타일 */
+.btn-danger {
+    color: #fff;
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.btn-danger:hover {
+    color: #fff;
+    background-color: #c82333;
+    border-color: #bd2130;
+}

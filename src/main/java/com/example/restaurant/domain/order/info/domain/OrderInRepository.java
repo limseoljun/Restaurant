@@ -1,7 +1,6 @@
 package com.example.restaurant.domain.order.info.domain;
 
 import com.example.restaurant.exception.NotFoundFoodException;
-import com.example.restaurant.exception.NotFoundOrderException;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

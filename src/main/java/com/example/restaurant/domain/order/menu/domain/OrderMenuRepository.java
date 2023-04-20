@@ -17,7 +17,5 @@ public interface OrderMenuRepository extends JpaRepository<OrderMenu,Long> {
     default OrderMenu existingOrderMenu(Long foodId, Long orderId){
         Optional<OrderMenu> orderMenuOptional = findByFoodIdAndOrderInId(foodId,orderId);
         return orderMenuOptional.orElse(null);
-    };
-
-    Optional<OrderMenu> findByResult(String ready);
+    }
 }

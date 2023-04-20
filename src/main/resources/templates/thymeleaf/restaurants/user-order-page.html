@@ -3,25 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- 부트스트랩 4 버전을 사용합니다. -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- 커스텀 CSS 파일도 불러옵니다. -->
+    <link rel="stylesheet" href="/static/css/restaurant/user-order-page.css">
+    <!-- 커스텀 스타일을 추가할 수 있습니다. -->
 </head>
 <body>
-<div th:each="list:${foodList}">
-    <form th:action="@{/order/food-select}">
-        이름<input type="submit"th:value="${list.getName()}">
-        <input type="hidden" name="foodId" th:value="${list.getId()}">
-    </form>
-    가격<div th:text="${list.getPrice()}"></div>
-    정보<div th:text="${list.getInfo()}"></div>
-    종류<div th:text="${list.getCategory()}"></div>
-</div>
-    <div th:if="${orderId != null}">
-        ================================
-        장바구니 있음!!!!!!!
-        <form th:action="@{/order/basket}">
-            <input type="hidden" name="orderId" th:value="${orderId}">
-            <input type="submit" value="장바구니">
-        </form>
-    </div>
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-3">
 
+                <div class="card-body">
+                    <!-- foodList를 한개씩 출력합니다. -->
+                    <div th:each="list:${foodList}">
+                        <img th:src="${list.getImagePath()}" class="card-img-top">
+                        <form th:action="@{/order/food-select}">
+                            <h5 class="card-title"><input type="submit" class="btn btn-link text-dark"
+                                                          th:value="${list.getName()}"></h5>
+                            <input type="hidden" name="foodId" th:value="${list.getId()}">
+                            <p class="card-text">
+                                가격: <span class="font-weight-bold" th:text="${list.getPrice()}"></span>
+                            </p>
+                            <p class="card-text">
+                                정보: <span th:text="${list.getInfo()}"></span>
+                            </p>
+                            <p class="card-text">
+                                종류: <span th:text="${list.getCategory()}"></span>
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <!-- orderInId가 있을 경우에만 출력합니다. -->
+            <div th:if="${orderInId != null}" class="alert alert-success" role="alert">
+                장바구니 있음!!!!!!!
+                <form th:action="@{/order/basket}">
+                    <input type="hidden" name="orderInId" th:value="${orderInId}">
+                    <input type="submit" class="btn btn-primary" value="장바구니">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 부트스트랩 4 JS 파일도 불러옵니다. -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

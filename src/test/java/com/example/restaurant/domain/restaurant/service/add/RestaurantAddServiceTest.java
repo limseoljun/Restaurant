@@ -9,12 +9,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mock.web.MockMultipartFile;
 
 import javax.transaction.Transactional;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
 @Transactional
@@ -33,15 +35,20 @@ class RestaurantAddServiceTest {
 
     @Test
     void 식당_추가_정상작동(){
+        byte[] imageBytes = "test-image".getBytes();
+        String imageName = "test-image.jpg";
+        MockMultipartFile file = new MockMultipartFile("file", imageName, "image/jpeg", imageBytes);
+
         Owner owner = new Owner("owner","1234");
         ownerRepository.save(owner);
         RestaurantDto dto = new RestaurantDto("restaurant","123","1234");
 
-        restaurantAddService.add(dto, owner.getId());
+        restaurantAddService.add(dto, owner.getId(),file);
         Optional<Restaurant> restaurant = restaurantRepository.findByOwnerId(owner.getId());
         assertEquals(dto.getName(),restaurant.get().getName());
         assertEquals(dto.getBusinessAddress(),restaurant.get().getBusinessAddress());
         assertEquals(dto.getCallNum(),restaurant.get().getCallNum());
         assertEquals(owner.getId(),restaurant.get().getOwnerId());
+        assertNotNull(restaurant.get().getImagePath());
     }
 }

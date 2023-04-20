@@ -5,7 +5,6 @@ import com.example.restaurant.domain.food.domain.FoodRepository;
 import com.example.restaurant.domain.order.info.domain.OrderIn;
 import com.example.restaurant.domain.order.info.domain.OrderInRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,8 +27,8 @@ public class UserOrderPageController {
                       Model model ){
         if(orderInRepository.existsByUserIdAndResult(userId,"Payment waiting")){
             Optional<OrderIn>orderIn=orderInRepository.findByUserIdAndResult(userId, "Payment waiting");
-            Long orderId = orderIn.get().getId();
-            model.addAttribute("orderId",orderId);
+            Long orderInId = orderIn.get().getId();
+            model.addAttribute("orderInId",orderInId);
         }
         List<Food> foodList = foodRepository.findByRestaurantId(restaurantId);
             model.addAttribute("foodList",foodList);

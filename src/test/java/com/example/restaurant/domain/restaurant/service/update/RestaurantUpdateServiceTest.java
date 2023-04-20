@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mock.web.MockMultipartFile;
 
 import javax.transaction.Transactional;
 
@@ -32,18 +33,23 @@ class RestaurantUpdateServiceTest {
 
     @Test
     void 식당_변경_정상작동(){
+        byte[] imageBytes = "test-image".getBytes();
+        String imageName = "test-image.jpg";
+        MockMultipartFile file = new MockMultipartFile("file", imageName, "image/jpeg", imageBytes);
+
         Owner owner = new Owner("owner","123");
         ownerRepository.save(owner);
         Restaurant restaurant = new Restaurant("restaurant","address","000",owner.getId());
         restaurantRepository.save(restaurant);
         RestaurantDto restaurantDto = new RestaurantDto("restaurant2","Address2","111");
 
-        boolean isUpdate = restaurantUpdateService.update(restaurant.getId(), restaurantDto);
+        boolean isUpdate = restaurantUpdateService.update(restaurant.getId(), restaurantDto,file);
 
         assertTrue(isUpdate);
         assertEquals(restaurantDto.getName(),restaurant.getName());
         assertEquals(restaurantDto.getBusinessAddress(),restaurant.getBusinessAddress());
         assertEquals(restaurantDto.getCallNum(),restaurant.getCallNum());
         assertEquals(owner.getId(),restaurant.getOwnerId());
+        assertNotNull(restaurant.getImagePath());
     }
 }

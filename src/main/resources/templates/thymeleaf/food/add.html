@@ -3,42 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/static/css/food/add.css">
 </head>
 <body>
-<form th:action="@{/food/add}" method="post">
-  <div class="input">
-    <label for="name">메뉴이름</label>
-    <input type="text" name="name" id="name">
-    <span class="spin"></span>
-  </div>
+<div class="container">
+  <form th:action="@{/food/add}" method="post" enctype="multipart/form-data">
+    <div class="input">
+      <label for="name">메뉴이름</label>
+      <input type="text" name="name" id="name" class="form-control">
+    </div>
 
-  <div class="input">
-    <label for="price">가격</label>
-    <input type="text" name="price" id="price">
-    <span class="spin"></span>
-  </div>
+    <div class="input">
+      <label for="price">가격</label>
+      <input type="text" name="price" id="price" class="form-control">
+    </div>
 
-  <div class="input">
-    <label for="info">정보</label>
-    <input type="text" name="info" id="info">
-    <span class="spin"></span>
-  </div>
+    <div class="input">
+      <label for="info">정보</label>
+      <input type="text" name="info" id="info" class="form-control">
+    </div>
 
-  <div class="input">
-    <label for="category">종류</label>
-    <input type="text" name="category" id="category">
-    <span class="spin"></span>
-  </div>
+    <div class="input">
+      <label for="category">종류</label>
+      <input type="text" name="category" id="category" class="form-control">
+    </div>
 
-  <div class="input">
-    <label for="restaurantId"><div th:text="${getRestaurantId}"></div></label>
-    <input type="hidden" name="restaurantId" id="restaurantId" th:value="${getRestaurantId}">
-    <span class="spin"></span>
-  </div>
+    <div class="border_clear">사진 이미지 업로드</div>
+    <input type="file" name="file" accept="image/*" class="form-control-file">
 
-  <div class="button">
-    <button><span>NEXT</span></button>
-  </div>
-</form>
+    <div class="button">
+      <button type="submit"><span>NEXT</span></button>
+    </div>
+  </form>
+</div>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>

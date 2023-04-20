@@ -20,6 +20,7 @@ public class OwnerJoinController {
     public String get() {
         return "thymeleaf/owner/join";
     }
+
     @PostMapping("")
     public String post(@Valid OwnerJoinControllerDto dto) {
         ownerJoinService.join(dto.convertDto());

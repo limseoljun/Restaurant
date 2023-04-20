@@ -37,12 +37,10 @@ public class OrderMenu {
         this.time=time;
         this.result="Payment waiting";
     }
-    public void update (int count, String time, Food food){
-        this.count=this.count+count;
-        this.price=this.price+(food.getPrice()* count);
-        this.food=food;
+    public void update (int count, String time){
+        this.count=count;
+        this.price=food.getPrice()* count;
         this.time=time;
-        this.result="Payment waiting";
     }
     public void updateResult(String result){
         this.result=result;

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/static/css/owner/owner-order-page.css">
+</head>
+<body>
+<!-- 주문 목록 -->
+<div class="container">
+  <h2 class="mb-4">주문</h2>
+  <div class="row">
+    <div class="col-md-6">
+      <div th:if="${orderInList}!=null" th:each="list: ${orderInList}" class="order-item">
+        <div class="row align-items-center">
+          <div class="col-sm-4">
+          </div>
+          <div class="col-sm-8">
+            <h5 class="card-title mb-3" th:text="'주문 시간: ' + ${list.getTime()}"></h5>
+            <div class="order-info mb-3">
+              <p class="mb-1" th:text="'주문자 닉네임: ' + ${list.getUser().getNickName()}"></p>
+              <p class="mb-1" th:text="'주문자 주소: ' + ${list.getUser().getHomeAddress()}"></p>
+              <p class="mb-0" th:text="'주문자 연락처: ' + ${list.getUser().getPhoneNum()}"></p>
+            </div>
+            <form th:action="@{/owner/order-processing}" method="post">
+              <input type="hidden" name="orderInId" th:value="${list.getId()}">
+              <button type="submit" class="btn btn-primary">주문 처리</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 부트스트랩 스크립트 CDN 링크 추가 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

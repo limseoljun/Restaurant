@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Optional;
 
  @Service
 @Transactional
@@ -33,7 +32,7 @@ public class OrderMenuAddServiceImpl implements OrderMenuAddService{
         OrderIn orderIn = orderInRepository.validateOrder(dto.getOrderId());
         OrderMenu existingOrderMenu = orderMenuRepository.existingOrderMenu(food.getId(), orderIn.getId());
         if(existingOrderMenu!=null){
-            existingOrderMenu.update(dto.getCount(),getTime(),food);
+            existingOrderMenu.update(dto.getCount(),getTime());
         }else {
             OrderMenu orderMenu = new OrderMenu(
                     dto.getCount(),

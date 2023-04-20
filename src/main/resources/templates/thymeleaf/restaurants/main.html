@@ -3,15 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/restaurant/restaurant-main.css">
 </head>
 <body>
-음식점 리스트
-<div th:each="list : ${restaurantList}">
-    <form action="/restaurants/main" method="post">
-        <input type="hidden" name="restaurantId" th:value="${list.getId()}">
-        이름<input type="submit" th:value="${list.getName()}" >
-    </form>
+<div class="container mt-5">
+    <h1>음식점 리스트</h1>
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+        <div th:each="list : ${restaurantList}" class="col mb-4">
+            <div class="card h-100">
+                <img class="card-img-top" alt="음식점 이미지" th:src="${list.getImagePath()}">
+                <div class="card-body">
+                    <h2 class="card-title mb-3" th:text="${list.getName()}"></h2>
+                    <form action="/restaurants/main" method="post">
+                        <input type="hidden" name="restaurantId" th:value="${list.getId()}">
+                        <button type="submit" class="btn btn-primary w-100">메뉴 보기</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a th:href="@{/user/my-page}" class="mt-5 btn btn-secondary">내 페이지 가기</a>
 </div>
-<a th:href="@{/user/my-page}">내페이지 가기</a>
 </body>
 </html>

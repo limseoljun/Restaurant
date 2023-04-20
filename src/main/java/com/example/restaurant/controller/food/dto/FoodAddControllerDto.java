@@ -1,6 +1,5 @@
 package com.example.restaurant.controller.food.dto;
 
-import com.example.restaurant.controller.food.FoodAddController;
 import com.example.restaurant.domain.servicedto.food.FoodDto;
 import lombok.Getter;
 

@@ -16,8 +16,8 @@ public class OrderDto {
     }
     public OrderMenuDto convertOrderMenuDto(Long orderId){
         return new OrderMenuDto(
+                this.foodId,
                 this.count,
-            this.foodId,
                 orderId
             );
     }

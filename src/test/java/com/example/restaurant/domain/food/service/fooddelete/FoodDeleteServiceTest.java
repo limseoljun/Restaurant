@@ -7,11 +7,14 @@ import com.example.restaurant.domain.owner.domain.Owner;
 import com.example.restaurant.domain.owner.domain.OwnerRepository;
 import com.example.restaurant.domain.restaurant.domain.Restaurant;
 import com.example.restaurant.domain.restaurant.domain.RestaurantRepository;
+import com.example.restaurant.exception.NotFoundFoodException;
+import com.example.restaurant.exception.NotFoundOwnerException;
 import com.example.restaurant.exception.OwnerNameAndPasswordDifferentException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.transaction.Transactional;
 
@@ -24,21 +27,22 @@ class FoodDeleteServiceTest {
     private final FoodRepository foodRepository;
     private final FoodDeleteService foodDeleteService;
     private final RestaurantRepository restaurantRepository;
-
     private final OwnerRepository ownerRepository;
+    private final PasswordEncoder bCryptEncoder;
 
     @Autowired
-    FoodDeleteServiceTest(FoodRepository foodRepository, FoodDeleteService foodDeleteService, RestaurantRepository restaurantRepository, OwnerRepository ownerRepository) {
+    FoodDeleteServiceTest(FoodRepository foodRepository, FoodDeleteService foodDeleteService, RestaurantRepository restaurantRepository, OwnerRepository ownerRepository, PasswordEncoder bCryptEncoder) {
         this.foodRepository = foodRepository;
         this.foodDeleteService = foodDeleteService;
         this.restaurantRepository = restaurantRepository;
         this.ownerRepository = ownerRepository;
+        this.bCryptEncoder = bCryptEncoder;
     }
 
     //Owner 대신 restaurant 고유번호로 바꾸기
     @Test
     void 삭제_정상작동(){
-        Owner owner = new Owner("owner","1234");
+        Owner owner = new Owner("owner",bCryptEncoder.encode("1234"));
         ownerRepository.save(owner);
         Restaurant restaurant =  new Restaurant("restaurant","123","000",owner.getId());
         restaurantRepository.save(restaurant);
@@ -62,10 +66,9 @@ class FoodDeleteServiceTest {
         Food food = new Food("name",1000,"info","category", restaurant.getId());
         foodRepository.save(food);
 
-        OwnerNameAndPasswordDifferentException e = assertThrows(OwnerNameAndPasswordDifferentException.class, () ->
+        Exception e = assertThrows(NotFoundOwnerException.class, () ->
                     foodDeleteService.delete(food.getId(),dto)
                 );
-
-        assertEquals("Different Owner Name And Password", e.getMessage());
+        assertEquals("Invalid OwnerId", e.getMessage());
     }
 }

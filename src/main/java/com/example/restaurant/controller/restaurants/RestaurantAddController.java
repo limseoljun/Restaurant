@@ -1,14 +1,11 @@
 package com.example.restaurant.controller.restaurants;
 
 import com.example.restaurant.controller.owner.dto.RestaurantAddControllerDto;
-import com.example.restaurant.domain.restaurant.domain.Restaurant;
 import com.example.restaurant.domain.restaurant.service.add.RestaurantAddService;
-import com.example.restaurant.domain.servicedto.restaurant.RestaurantDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequiredArgsConstructor
@@ -21,8 +18,8 @@ public class RestaurantAddController {
         return "thymeleaf/restaurants/add";
     }
     @PostMapping("")
-    public String post(RestaurantAddControllerDto dto, @SessionAttribute Long ownerId){
-        restaurantAddService.add(dto.convertDto(),ownerId);
+    public String post(RestaurantAddControllerDto dto, @SessionAttribute Long ownerId, MultipartFile file){
+        restaurantAddService.add(dto.convertDto(),ownerId,file);
         return "redirect:/owner/my-page";
     }
 
